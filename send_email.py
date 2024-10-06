@@ -20,9 +20,9 @@ def send_email():
     try:
         encoded_data = json.loads(os.environ.get('RECIPIENTS'))
         print(" not fuck")
-    except:
-        print("f")
-        print("1"+os.environ.get('RECIPIENTS', "Fuck"))
+    except Exception as e:
+        print(e)
+        print(os.environ.get('RECIPIENTS', "Fuck"))
         return
 
     # try:
