@@ -31,7 +31,7 @@ def send_email():
 #         except Exception as e:
 #             print(e)
         
-    print("1"+os.environ.get('RECIPIENTS_DATAS'))
+    print("1"+os.environ.get('RECIPIENTS'))
     print(111111)
     return
     if not encoded_data:
