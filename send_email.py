@@ -23,6 +23,7 @@ def send_email():
         return
     except Exception as e:
         print(e)
+        print()
         print(os.environ.get('RECIPIENTS', "Fuck"))
         return
 
