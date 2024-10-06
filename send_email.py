@@ -18,7 +18,8 @@ def send_email():
 
     # Retrieve and decode the recipients data
     try:
-        encoded_data = json.loads(os.environ.get('RECIPIENTS_DATA'))
+        encoded_data = json.loads(os.environ.get('RECIPIENTS'))
+        print(" not fuck")
     except:
         print("f")
         print("1"+os.environ.get('RECIPIENTS', "Fuck"))
