@@ -1,6 +1,8 @@
 import os
+import base64
+import json
 import sendgrid
-from sendgrid.helpers.mail import Mail, Email, To
+from sendgrid.helpers.mail import Mail, Email, To, Content
 import logging
 
 # Set up logging
@@ -13,47 +15,60 @@ def send_email():
         logging.error("SendGrid API key not set in environment variables.")
         return
 
-    # Define email parameters
+    # Retrieve and decode the recipients data
+    encoded_data = os.environ.get('RECIPIENTS_DATA')
+    if not encoded_data:
+        logging.error("Recipients data not set in environment variables.")
+        return
+
+    try:
+        decoded_data = base64.b64decode(encoded_data).decode('utf-8')
+        recipients = json.loads(decoded_data)
+    except Exception as e:
+        logging.error(f"Failed to decode and parse recipients data: {e}")
+        return
+
+    # Sender email
     from_email = Email(os.environ.get('FROM_EMAIL'))  # Verified sender email
-    to_email = To(os.environ.get('TO_EMAIL'))         # Recipient email address
-    subject = "Hourly Reminder"
-
-    # Website link to include in the email
-    website_url = os.environ.get('Link')  # Replace with your website link
-
-    # HTML content with a clickable link
-    html_content = f"""
-    <html>
-      <body>
-        <p>This is your hourly reminder to stay focused and productive!</p>
-        <p>Click <a href="{website_url}">here</a> to visit the website.</p>
-      </body>
-    </html>
-    """
-
-    # Plain text content as a fallback
-    plain_text_content = f"This is your hourly reminder to stay focused and productive! Visit the website at: {website_url}"
-
-    # Create a Mail object with both plain text and HTML content
-    mail = Mail(
-        from_email=from_email,
-        to_emails=to_email,
-        subject=subject,
-        plain_text_content=plain_text_content,
-        html_content=html_content
-    )
-    print("Website received")
-    print(website_url)
+    if not from_email.email:
+        logging.error("Sender email not set in environment variables.")
+        return
 
     # Create a SendGrid client
     sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
 
-    try:
-        # Send the email
-        response = sg.send(mail)
-        logging.info(f"Email sent! Status Code: {response.status_code}")
-    except Exception as e:
-        logging.error(f"An error occurred: {e}")
+    # Send emails to each recipient
+    for email, message in recipients.items():
+        to_email = To(email)
+        subject = "Hourly Reminder"
+
+        # HTML content with a clickable link (if needed)
+        html_content = f"""
+        <html>
+          <body>
+            <p>{message}</p>
+          </body>
+        </html>
+        """
+
+        # Plain text content as a fallback
+        plain_text_content = message
+
+        # Create a Mail object with both plain text and HTML content
+        mail = Mail(
+            from_email=from_email,
+            to_emails=to_email,
+            subject=subject,
+            plain_text_content=plain_text_content,
+            html_content=html_content
+        )
+
+        try:
+            # Send the email
+            response = sg.send(mail)
+            logging.info(f"Email sent to {email}! Status Code: {response.status_code}")
+        except Exception as e:
+            logging.error(f"An error occurred while sending email to {email}: {e}")
 
 if __name__ == "__main__":
     send_email()
