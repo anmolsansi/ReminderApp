@@ -17,7 +17,20 @@ def send_email():
 
     # Retrieve and decode the recipients data
     encoded_data = os.environ.get('RECIPIENTS_DATA')
-    recipients = json.loads(encoded_data)
+    try:
+        recipients = json.loads(encoded_data)
+    except:
+        print("different")
+        encoded_data = {
+"anmolsansi@gmail.com": "https://www.linkedin.com/jobs/search/?currentJobId=4044475925&f_E=2%2C3&f_TPR=r86400&geoId=103644278&keywords=%22Software%20Engineer%22&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&sortBy=DD",
+"anmolsansi08@gmail.com": "https://www.linkedin.com/jobs/search/?currentJobId=4044475925&f_E=2%2C3&f_TPR=r86400&geoId=103644278&keywords=%22Software%20Engineer%22&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&sortBy=DD",
+}
+        try:
+            recipients = json.loads(encoded_data)
+        except e as Exception():
+            print(e)
+        
+
     if not encoded_data:
         logging.error("Recipients data not set in environment variables.")
         return
