@@ -51,6 +51,9 @@ def send_email():
     # Create a SendGrid client
     sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
 
+    print(recipients)
+    return
+    
     # Send emails to each recipient
     for email, message in recipients.items():
         to_email = To(email)
