@@ -42,6 +42,7 @@ def send_email():
         plain_text_content=plain_text_content,
         html_content=html_content
     )
+    print(website_url)
 
     # Create a SendGrid client
     sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
