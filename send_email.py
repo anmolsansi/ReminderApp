@@ -17,7 +17,7 @@ def send_email():
 
     # Retrieve and decode the recipients data
     encoded_data = os.environ.get('RECIPIENTS_DATA')
-    recipients = json.loads(decoded_data)
+    recipients = json.loads(encoded_data)
     if not encoded_data:
         logging.error("Recipients data not set in environment variables.")
         return
