@@ -19,7 +19,7 @@ def send_email():
     subject = "Hourly Reminder"
 
     # Website link to include in the email
-    website_url = "https://www.example.com"  # Replace with your website link
+    website_url = os.environ.get('Link')  # Replace with your website link
 
     # HTML content with a clickable link
     html_content = f"""
