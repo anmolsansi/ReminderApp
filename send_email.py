@@ -42,6 +42,7 @@ def send_email():
         plain_text_content=plain_text_content,
         html_content=html_content
     )
+    print("Website received")
     print(website_url)
 
     # Create a SendGrid client
