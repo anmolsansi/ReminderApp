@@ -25,6 +25,5 @@ jobs:
         env:
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
           FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
-          TO_EMAIL: ${{ secrets.TO_EMAIL }}
-          Link: ${{ secrets.Link }}
+          RECIPIENTS_DATA: ${{ secrets.RECIPIENTS_DATA }}
         run: python send_email.py
