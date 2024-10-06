@@ -19,13 +19,14 @@ def send_email():
     # Retrieve and decode the recipients data
     try:
         encoded_data_string = str(os.environ.get('RECIPIENTS'))
+        
+        if not encoded_data:
+            logging.error("Recipients data not set in environment variables.")
+            return
+        
         encoded_data = json.loads(r"" + encoded_data_string)
-        print(" not fuck")
-        return
     except Exception as e:
         print(e)
-        print()
-        print(os.environ.get('RECIPIENTS', "Fuck"))
         return
 
     # try:
@@ -41,11 +42,7 @@ def send_email():
 #         except Exception as e:
 #             print(e)
         
-    print(111111)
-    return
-    if not encoded_data:
-        logging.error("Recipients data not set in environment variables.")
-        return
+    
 
     # try:
     #     decoded_data = base64.b64decode(encoded_data).decode('utf-8')
@@ -62,8 +59,6 @@ def send_email():
 
     # Create a SendGrid client
     sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
-
-    print(recipients)
     
     # Send emails to each recipient
     for email, message in encoded_data.items():
