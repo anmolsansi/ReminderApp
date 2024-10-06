@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO)
 def send_email():
     # Retrieve the SendGrid API key from environment variables
     SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
-    recipients = "test"
+    encoded_data = ""
     if not SENDGRID_API_KEY:
         logging.error("SendGrid API key not set in environment variables.")
         return
@@ -20,7 +20,7 @@ def send_email():
     try:
         encoded_data_string = str(os.environ.get('RECIPIENTS'))
         
-        if not encoded_data:
+        if not encoded_data_string:
             logging.error("Recipients data not set in environment variables.")
             return
         
