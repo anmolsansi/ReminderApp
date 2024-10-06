@@ -18,18 +18,18 @@ def send_email():
 
     # Retrieve and decode the recipients data
     encoded_data = os.environ.get('RECIPIENTS_DATA')
-    try:
-        recipients = json.loads(encoded_data)
-    except:
-        print("different")
-        encoded_data = {
-"anmolsansi@gmail.com": "https://www.linkedin.com/jobs/search/?currentJobId=4044475925&f_E=2%2C3&f_TPR=r86400&geoId=103644278&keywords=%22Software%20Engineer%22&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&sortBy=DD",
-"anmolsansi08@gmail.com": "https://www.linkedin.com/jobs/search/?currentJobId=4044475925&f_E=2%2C3&f_TPR=r86400&geoId=103644278&keywords=%22Software%20Engineer%22&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&sortBy=DD",
-}
-        try:
-            recipients = json.loads(encoded_data)
-        except Exception as e:
-            print(e)
+#     try:
+#         recipients = json.loads(encoded_data)
+#     except:
+#         print("different")
+#         encoded_data = {
+# "anmolsansi@gmail.com": "https://www.linkedin.com/jobs/search/?currentJobId=4044475925&f_E=2%2C3&f_TPR=r86400&geoId=103644278&keywords=%22Software%20Engineer%22&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&sortBy=DD",
+# "anmolsansi08@gmail.com": "https://www.linkedin.com/jobs/search/?currentJobId=4044475925&f_E=2%2C3&f_TPR=r86400&geoId=103644278&keywords=%22Software%20Engineer%22&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&sortBy=DD",
+# }
+#         try:
+#             recipients = json.loads(encoded_data)
+#         except Exception as e:
+#             print(e)
         
 
     if not encoded_data:
@@ -53,10 +53,9 @@ def send_email():
     sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
 
     print(recipients)
-    return
     
     # Send emails to each recipient
-    for email, message in recipients.items():
+    for email, message in encoded_data.items():
         to_email = To(email)
         subject = "Hourly Reminder"
 
