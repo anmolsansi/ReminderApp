@@ -27,7 +27,7 @@ def send_email():
 }
         try:
             recipients = json.loads(encoded_data)
-        except e as Exception():
+        except Exception as e:
             print(e)
         
 
