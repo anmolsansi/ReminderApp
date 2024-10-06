@@ -17,8 +17,14 @@ def send_email():
         return
 
     # Retrieve and decode the recipients data
-    encoded_data = os.environ.get('RECIPIENTS_DATA')
-#     try:
+    try:
+        encoded_data = json.loads(os.environ.get('RECIPIENTS_DATA'))
+    except:
+        print("f")
+        print("1"+os.environ.get('RECIPIENTS', "Fuck"))
+        return
+
+    # try:
 #         recipients = json.loads(encoded_data)
 #     except:
 #         print("different")
@@ -31,7 +37,6 @@ def send_email():
 #         except Exception as e:
 #             print(e)
         
-    print("1"+os.environ.get('RECIPIENTS', "Fuck"))
     print(111111)
     return
     if not encoded_data:
