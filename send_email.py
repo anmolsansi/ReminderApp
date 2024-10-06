@@ -17,16 +17,17 @@ def send_email():
 
     # Retrieve and decode the recipients data
     encoded_data = os.environ.get('RECIPIENTS_DATA')
+    recipients = json.loads(decoded_data)
     if not encoded_data:
         logging.error("Recipients data not set in environment variables.")
         return
 
-    try:
-        decoded_data = base64.b64decode(encoded_data).decode('utf-8')
-        recipients = json.loads(decoded_data)
-    except Exception as e:
-        logging.error(f"Failed to decode and parse recipients data: {e}")
-        return
+    # try:
+    #     decoded_data = base64.b64decode(encoded_data).decode('utf-8')
+    #     recipients = json.loads(decoded_data)
+    # except Exception as e:
+    #     logging.error(f"Failed to decode and parse recipients data: {e}")
+    #     return
 
     # Sender email
     from_email = Email(os.environ.get('FROM_EMAIL'))  # Verified sender email
