@@ -1,6 +1,6 @@
 import os
 import sendgrid
-from sendgrid.helpers.mail import Mail, Email, To, Content
+from sendgrid.helpers.mail import Mail, Email, To
 import logging
 
 # Set up logging
@@ -17,10 +17,31 @@ def send_email():
     from_email = Email(os.environ.get('FROM_EMAIL'))  # Verified sender email
     to_email = To(os.environ.get('TO_EMAIL'))         # Recipient email address
     subject = "Hourly Reminder"
-    content = Content("text/plain", "This is your hourly reminder to stay focused and productive!")
 
-    # Create a Mail object
-    mail = Mail(from_email, to_email, subject, content)
+    # Website link to include in the email
+    website_url = "https://www.example.com"  # Replace with your website link
+
+    # HTML content with a clickable link
+    html_content = f"""
+    <html>
+      <body>
+        <p>This is your hourly reminder to stay focused and productive!</p>
+        <p>Click <a href="{website_url}">here</a> to visit the website.</p>
+      </body>
+    </html>
+    """
+
+    # Plain text content as a fallback
+    plain_text_content = f"This is your hourly reminder to stay focused and productive! Visit the website at: {website_url}"
+
+    # Create a Mail object with both plain text and HTML content
+    mail = Mail(
+        from_email=from_email,
+        to_emails=to_email,
+        subject=subject,
+        plain_text_content=plain_text_content,
+        html_content=html_content
+    )
 
     # Create a SendGrid client
     sg = sendgrid.SendGridAPIClient(api_key=SENDGRID_API_KEY)
