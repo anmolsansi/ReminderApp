@@ -2,7 +2,7 @@ name: Send Hourly Reminder Email
 
 on:
   schedule:
-    - cron: '20 4-13 * * 1-5'  # At minute 0 past every hour from 9 through 17 on Monday through Friday.
+    - cron: '20 14-23 * * 1-5'  # At minute 0 past every hour from 9 through 17 on Monday through Friday.
   workflow_dispatch:          # Allows manual triggering of the workflow.
 
 jobs:
